@@ -1,2 +1,0 @@
-# tinder
-Created with CodeSandbox
