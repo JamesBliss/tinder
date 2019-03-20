@@ -123,6 +123,11 @@ const Deck = () => {
   const clickHandler = ({index, direction}) => {
     const dir = direction === "left" ? -1 : 1;
     const velocity = 3;
+
+    // if already gone, block a double click returning items!
+    if (gone.has(index)) return;
+
+    // add to fone list
     gone.add(index);
 
     // update animation store with move
@@ -130,6 +135,7 @@ const Deck = () => {
       // as trigged the `gone.add(index)`
       const isGone = gone.has(index);
 
+      //
       if (index + 1 === i && isGone) {
         return {
           ...toFirst,
@@ -170,13 +176,14 @@ const Deck = () => {
   // drag gesture hook
   const bind = useGesture({
     onAction: ({args: [index, passedGone], down, delta: [xDelta], distance, direction: [xDir], velocity, event}) => {
-      // console.log(event);
-
       // If you flick hard enough it should trigger the card to fly out
       const trigger = velocity > 0.2;
 
       // Direction should either point left or right
       const dir = xDir < 0 ? -1 : 1;
+
+      // if already gone, block a double click returning items!
+      if (gone.has(index)) return;
 
       // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
       if (!down && trigger && (xDir > 0.6 || xDir < -0.6)) gone.add(index);
@@ -186,6 +193,7 @@ const Deck = () => {
         // as trigged the `gone.add(index)`
         const isGone = gone.has(index);
 
+        //
         if (index + 1 === i && isGone) {
           return {
             ...toFirst,
