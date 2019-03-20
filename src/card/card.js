@@ -24,11 +24,19 @@ const shouldHide = xValue => {
   return x < 50 ? 1 - x / 150 : 0;
 };
 
-const shouldScale = ({xRaw, emotion}) => {
+const shouldMove = ({xRaw, emotion}) => {
   const xParsed = parseInt(xRaw, 10);
   const xPositive = Math.abs(xRaw);
 
-  const show = `scale(${xPositive < 50 ? 1 + xPositive / 100 : 1.5}) translate3d(0, 0, 0)`;
+  const show = `
+    scale(${xPositive < 50 ? 1 + xPositive / 100 : 1.5})
+    ${
+      emotion === "love"
+        ? `translate3d(-${xPositive < 100 ? (xPositive / 100) * 50 : 50}px, 0, 0)`
+        : `translate3d(${xPositive < 100 ? (xPositive / 100) * 50 : 50}px, 0, 0)`
+    }
+  `;
+
   const hide = `scale(${xPositive < 50 ? 1 - xPositive / 100 : 0})`;
 
   if (xParsed === 0) return `scale(1)`;
@@ -108,7 +116,7 @@ const Card = ({
             <Emoji
               style={{
                 opacity: x.interpolate(o => (parseInt(o, 10) > 0 ? shouldHide(o) : "1")),
-                transform: x.interpolate(o => shouldScale({xRaw: o, emotion: "hate"}))
+                transform: x.interpolate(o => shouldMove({xRaw: o, emotion: "hate"}))
               }}
               className="emoji"
               role="img"
@@ -128,7 +136,7 @@ const Card = ({
             <Emoji
               style={{
                 opacity: x.interpolate(o => (parseInt(o, 10) < 0 ? shouldHide(o) : "1")),
-                transform: x.interpolate(o => shouldScale({xRaw: o, emotion: "love"}))
+                transform: x.interpolate(o => shouldMove({xRaw: o, emotion: "love"}))
               }}
               className="emoji"
               role="img"
