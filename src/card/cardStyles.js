@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { animated } from "react-spring";
+import {animated} from "react-spring";
 
 export const Container = styled(animated.div)`
   background: #ffffff;
@@ -52,8 +52,7 @@ export const ProductType = styled.span`
 
 export const ProductTitle = styled.span`
   display: block;
-  font-family: LushHandwritten, HelveticaNeue, "Helvetica Neue", Helvetica,
-    sans-serif;
+  font-family: LushHandwritten, HelveticaNeue, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 23px;
   color: #333333;
   letter-spacing: 0;
@@ -84,28 +83,33 @@ export const Option = styled.button`
   &:active {
     outline: none;
   }
+`;
 
-  div {
-    padding-top: 60px;
+export const Text = styled(animated.span)`
+  display: block;
+  padding-top: 60px;
+`;
+
+export const Emoji = styled(animated.span)`
+  &:focus,
+  &:active {
+    box-shadow: inset 0 0 0 3px rgba(0, 123, 255, 0.75);
+    border-color: #80bdff;
   }
 
-  span {
-    &:focus,
-    &:active {
-      box-shadow: inset 0 0 0 3px rgba(0, 123, 255, 0.75);
-      border-color: #80bdff;
-    }
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 60px;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    background: #eaeaea;
-    border-radius: 40px;
-  }
+  line-height: 1;
+  padding-top: 3px;
+  transform-origin: center center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -30px;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  background: #eaeaea;
+  border-radius: 40px;
 `;

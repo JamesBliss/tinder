@@ -3,10 +3,62 @@ import {animated, interpolate} from "react-spring";
 
 import Aspect from "../components/aspect";
 
-import {Container, Pagination, Product, ProductImage, ProductType, ProductTitle, Options, Option} from "./cardStyles";
+import {
+  Container,
+  Pagination,
+  Product,
+  ProductImage,
+  ProductType,
+  ProductTitle,
+  Options,
+  Option,
+  Emoji,
+  Text
+} from "./cardStyles";
 
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `rotateX(1deg) rotate(${r * 2}deg) scale3d(${s})`;
+
+const shouldHide = xValue => {
+  const x = Math.abs(xValue);
+  return x < 50 ? 1 - x / 150 : 0;
+};
+
+const shouldMove = ({xRaw, emotion}) => {
+  const xParsed = parseInt(xRaw, 10);
+  const xPositive = Math.abs(xRaw);
+
+  const show = `
+    scale(${xPositive < 50 ? 1 + xPositive / 100 : 1.5})
+    ${
+      emotion === "love"
+        ? `translate3d(-${xPositive < 100 ? (xPositive / 100) * 50 : 50}px, 0, 0)`
+        : `translate3d(${xPositive < 100 ? (xPositive / 100) * 50 : 50}px, 0, 0)`
+    }
+  `;
+  const hide = `scale(${xPositive < 50 ? 1 - xPositive / 100 : 0})`;
+
+  if (xParsed === 0) return `scale(1)`;
+
+  // if button is love button
+  if (emotion === "love") {
+    // if product is loved
+    if (xParsed > 0) {
+      return show;
+    } else {
+      return hide;
+    }
+  }
+
+  if (emotion === "hate") {
+    // if product is not loved
+    if (xParsed < 0) {
+      return show;
+    } else {
+      return hide;
+    }
+  }
+};
 
 // exported component
 const Card = ({
@@ -26,8 +78,6 @@ const Card = ({
 }) => {
   const calcForCurrent = i + offset + 1;
   const current = calcForCurrent < 10 ? "0" + calcForCurrent : calcForCurrent;
-
-  console.log(x);
 
   return (
     <animated.div
@@ -62,16 +112,44 @@ const Card = ({
         </Product>
         <Options>
           <Option onClick={() => dispatch({direction: "left", index: i})}>
-            <span role="img" aria-label="next">
+            <Emoji
+              style={{
+                opacity: x.interpolate(o => (parseInt(o, 10) > 0 ? shouldHide(o) : "1")),
+                transform: x.interpolate(o => shouldMove({xRaw: o, emotion: "hate"}))
+              }}
+              className="emoji"
+              role="img"
+              aria-label="next"
+            >
               🤔
-            </span>
-            <div>Next...</div>
+            </Emoji>
+            <Text
+              style={{
+                opacity: x.interpolate(o => shouldHide(o))
+              }}
+            >
+              Next...
+            </Text>
           </Option>
           <Option onClick={() => dispatch({direction: "right", index: i})}>
-            <span role="img" aria-label="love it">
+            <Emoji
+              style={{
+                opacity: x.interpolate(o => (parseInt(o, 10) < 0 ? shouldHide(o) : "1")),
+                transform: x.interpolate(o => shouldMove({xRaw: o, emotion: "love"}))
+              }}
+              className="emoji"
+              role="img"
+              aria-label="love it"
+            >
               😍
-            </span>
-            <div>Love it!</div>
+            </Emoji>
+            <Text
+              style={{
+                opacity: x.interpolate(o => shouldHide(o))
+              }}
+            >
+              Love it!
+            </Text>
           </Option>
         </Options>
       </Container>
