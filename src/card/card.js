@@ -21,7 +21,7 @@ const trans = (r, s) => `rotateX(1deg) rotate(${r * 2}deg) scale3d(${s})`;
 
 const shouldHide = xValue => {
   const x = Math.abs(xValue);
-  return x < 50 ? 1 - x / 150 : 0;
+  return x < 50 ? 1 - x / 50 : 0;
 };
 
 const shouldMove = ({xRaw, emotion}) => {
