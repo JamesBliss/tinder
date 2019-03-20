@@ -170,7 +170,7 @@ const Deck = () => {
   // drag gesture hook
   const bind = useGesture({
     onAction: ({args: [index, passedGone], down, delta: [xDelta], distance, direction: [xDir], velocity, event}) => {
-      console.log(event);
+      // console.log(event);
 
       // If you flick hard enough it should trigger the card to fly out
       const trigger = velocity > 0.2;
