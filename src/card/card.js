@@ -36,6 +36,7 @@ const shouldMove = ({xRaw, emotion}) => {
         : `translate3d(${xPositive < 100 ? (xPositive / 100) * 50 : 50}px, 0, 0)`
     }
   `;
+
   const hide = `scale(${xPositive < 50 ? 1 - xPositive / 100 : 0})`;
 
   if (xParsed === 0) return `scale(1)`;

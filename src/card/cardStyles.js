@@ -96,7 +96,6 @@ export const Emoji = styled(animated.span)`
     box-shadow: inset 0 0 0 3px rgba(0, 123, 255, 0.75);
     border-color: #80bdff;
   }
-
   line-height: 1;
   padding-top: 3px;
   transform-origin: center center;
