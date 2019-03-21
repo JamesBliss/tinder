@@ -6,9 +6,11 @@ import "./styles.css";
 
 //
 import Deck from "./deck";
+import Loader from "./loader";
 
 function App() {
-  return <Deck />;
+  return <Loader />;
+  // return <Deck />;
 }
 
 const rootElement = document.getElementById("root");

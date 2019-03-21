@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import {animated, useSpring, interpolate} from "react-spring";
+import {animated, useSpring, interpolate, config} from "react-spring";
 
 export const Container = styled.div`
   position: relative;
+  width: 315px;
+  height: 426px;
   margin: 0 auto;
 `;
+
 
 const Card = styled(animated.div)`
   /*  */
@@ -14,8 +17,10 @@ const Card = styled(animated.div)`
 
   /*  */
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -32.5px;
 
   /*  */
   height: 100px;
@@ -24,6 +29,7 @@ const Card = styled(animated.div)`
   /*  */
   transform-origin: center bottom;
 `;
+
 
 // exported component
 const Loader = () => {
@@ -49,6 +55,8 @@ const Loader = () => {
 
   // Card two
   const CardTwoProps = useSpring({
+    delay: 100,
+    // reset: true,
     from: {
       transform: "0px, 0px, 0px",
       rotate: "0deg"
