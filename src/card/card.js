@@ -95,8 +95,10 @@ const Card = ({
       <Container
         style={{
           opacity: interpolate([opacity], opacity => opacity),
-          transform: interpolate([rot, scale], trans)
+          transform: interpolate([rot, scale], trans),
+          userSelect: x.interpolate(x => Math.abs(x) < 10 ? "auto" : "none")
         }}
+
         key={product.id}
       >
         <Pagination>
